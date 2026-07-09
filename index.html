@@ -227,6 +227,35 @@
     .hood-list{grid-template-columns:1fr;}
     .cta{flex-direction:column; text-align:center; padding:56px 30px;}
   }
+
+.menu-toggle{
+  display:none;
+  font-size:1.4rem;
+  cursor:pointer;
+}
+
+/* mobile nav */
+@media (max-width:860px){
+  .menu-toggle{
+    display:block;
+  }
+  .navlinks{
+    position:absolute;
+    top:76px;
+    left:0;
+    right:0;
+    background:var(--ivory);
+    flex-direction:column;
+    gap:20px;
+    padding:24px 32px;
+    display:none;
+    border-bottom:1px solid var(--line);
+  }
+  .navlinks.open{
+    display:flex;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -234,7 +263,8 @@
 <nav>
   <div class="wrap">
     <div class="brand"><img src="assets/logo.png" alt="Real logo">Holly Robinson</div>
-    <div class="navlinks">
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="navlinks" id="mobileMenu">
       <a href="#about">About</a>
       <a href="homes.html">Homes</a>
       <a href="#transactions">Transactions</a>
@@ -416,5 +446,12 @@
   }, {threshold:0.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mobileMenu").classList.toggle("open");
+}
+</script>
+
 </body>
 </html>
