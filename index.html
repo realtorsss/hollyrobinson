@@ -54,7 +54,14 @@
   }
   .nav-cta:hover{background:var(--ink); color:var(--ivory);}
 
-  /* hero */
+  
+.menu-toggle{display:none;background:none;border:0;font-size:1.9rem;color:var(--ink);cursor:pointer;z-index:101;}
+.mobile-menu{position:fixed;inset:0;background:rgba(246,243,236,.82);backdrop-filter:blur(14px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:28px;opacity:0;visibility:hidden;transform:translateY(-16px);transition:.35s ease;z-index:100;}
+.mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);}
+.mobile-menu a{font-size:1.4rem;font-family:'Fraunces',serif;}
+.menu-toggle.active{transform:rotate(90deg);transition:.3s;}
+
+/* hero */
   header.hero{
     position:relative; padding:170px 0 90px; overflow:hidden;
   }
@@ -218,6 +225,8 @@
 
   @media (max-width:860px){
     .navlinks{display:none;}
+    .nav-cta{display:none;}
+    .menu-toggle{display:block;}
     .hero-grid{grid-template-columns:1fr; gap:40px;}
     .hero-photo{order:-1; max-width:340px; margin:0 auto;}
     .stats-grid{grid-template-columns:1fr 1fr; row-gap:28px;}
@@ -241,9 +250,10 @@
       <a href="#neighborhoods">Neighborhoods</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="#contact" class="nav-cta">Work with Holly</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
   </div>
 </nav>
+<div class="mobile-menu"><a href="#about">About</a><a href="homes.html">Homes</a><a href="#transactions">Transactions</a><a href="#neighborhoods">Neighborhoods</a><a href="#contact">Contact</a></div>
 
 <header class="hero">
   <div class="hero-glow"></div>
@@ -415,6 +425,17 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const btn=document.querySelector('.menu-toggle');
+const menu=document.querySelector('.mobile-menu');
+btn?.addEventListener('click',()=>{
+ menu.classList.toggle('open');
+ btn.classList.toggle('active');
+ btn.textContent=menu.classList.contains('open')?'✕':'☰';
+ document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mobile-menu a').forEach(a=>a.onclick=()=>{menu.classList.remove('open');btn.classList.remove('active');btn.textContent='☰';document.body.style.overflow='';});
+
 </script>
 </body>
 </html>
